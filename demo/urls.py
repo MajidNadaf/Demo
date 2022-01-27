@@ -20,6 +20,7 @@ from .routers import *
 from demo_app.views import *
 from django.conf import settings
 from django.conf.urls.static import static
+from razorpay_app.views import *
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -33,6 +34,9 @@ urlpatterns = [
     path('product',ProductView,name='product'),
     path('product_list',ProductListView,name='product_list'),
     path('update_product/<int:id>',ProductUpdateView,name='update_product'),
+
+
+    path('payment',payment_home_page,name='payment')
 ]
 
 if settings.DEBUG:

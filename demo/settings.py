@@ -32,6 +32,7 @@ ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
     'demo_app',
+    'razorpay_app',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -130,3 +131,6 @@ STATICFILES_DIRS = [
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
+
+RAZORPAY_API_KEY="rzp_test_0dLg2fqGugEDZv"
+RAZORPAY_API_SECRET_KEY="0Z0grHqy0hBzLJZ9oz73p9wx"
