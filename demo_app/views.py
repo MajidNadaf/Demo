@@ -7,6 +7,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth.hashers import make_password
 from django.contrib.auth import login, logout,authenticate
 from .models import *
+from django.core.paginator import Paginator
 
 # Create your views here.
 context={}
@@ -72,7 +73,15 @@ def ProductView(request):
 
 def ProductListView(request):
     product =ProductModel.objects.all()
-    context['product']=product
+    pagen_no=request.GET.get('page',1)
+    p = Paginator(product, 2)
+    
+    try:
+        page=p.page(pagen_no)
+    except:
+        page=p.page(1)
+
+    context['product']=page
     return render(request,'product_list.html',context)
 
 
