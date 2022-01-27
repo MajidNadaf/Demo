@@ -1,0 +1,108 @@
+
+        {% extends 'home.html' %}
+        {% block body %}
+        <style>
+            .container1 {
+                padding: 30px;
+                border: 1px solid black;
+                border-radius: 0px;
+                margin-top:0% ;
+                margin-left:25% ;
+                width: 50%;
+            }
+        </style>
+    <body id="as" >
+      <form enctype="multipart/form-data" id="id_form" method="POST">
+    {% csrf_token %}
+    <div class="container1">
+    <h1 align='center'>update Product</h1>
+    <div class="col">
+<br>
+          <div  class="row">
+            <div class="col-sm-2">
+              <label>Name</label>
+            </div>
+            <div class="col-sm-8">
+             <input type="text"
+             class="form-control" id="product_name" value="{{ product.product_name}}" required name="product_name">
+            </div>
+            
+          </div>
+          <div class="col-sm-2"></div>
+         </div>
+
+         <br>
+
+         <div class="row">
+          <div class="col-sm-2">
+            <label> Price</label>
+
+          </div>
+          <div class="col-sm-8">
+            <input type="number"
+            class="form-control" id='price' value="{{ product.price }}" required name="price">
+          </div>
+          </div>
+<br>
+<div class="row">
+    <div class="col-sm-2">
+      <label> Image</label>
+
+    </div>
+    <div class="col-sm-8">
+      <input type="file"
+      class="form-control" id='img'  required name="p_img">
+    </div>
+    <div class="row">
+        <div class="col-sm-6"></div>
+        <div class="col-sm-6" align="left">
+            <img id="img-upload" src="{{product.p_img.url}}" style="width:150px;height:150px;">
+        </div>
+    </div>
+    </div>
+          
+
+        <br>
+        <input type="text" name="user" value="{{ request.user.id }}" hidden>
+          <div class="row">
+            <div class="col-sm-4"></div>
+            <div class="col-sm-2">
+               <button type="button" id="submit" onclick="data_submit()" class="btn btn-success">Submit</button>
+            </div>
+            <div class="col-sm-2">
+                <button class="btn btn-warning" type="reset">  Cancel </button>
+            </div>
+            <div class="col-sm-4"></div>
+          </div>
+</div>
+
+
+</form>
+<script>
+    function data_submit(){
+        var formData = new FormData(document.getElementById("id_form"))
+        var img_src=$("#img").val()
+        if(img_src == ""){
+            formData.delete('p_img')
+        }
+        $.ajax({
+            url : "/apiproduct_api/"+"{{ product.id }}"+"/" ,
+            headers: { "X-CSRFToken": "{{ csrf_token }}" },
+            type:"PATCH",
+            data : formData,
+            processData: false,
+            contentType: false,
+            success:function(data){
+                alert('Product Update  successfuly ')
+                location.href='{% url "product_list" %}'
+
+            },
+            error:function(data){
+                alert("Enter All Fields")
+                console.log('error',data)
+            }
+
+        });
+    }
+</script>
+    {% endblock %}

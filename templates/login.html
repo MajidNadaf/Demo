@@ -1,0 +1,71 @@
+<html>
+    <head>
+        <title>
+            login
+        </title>
+        <script src="sweetalert2.min.js"></script>
+        <link rel="stylesheet" href="sweetalert2.min.css">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <style>
+            .container {
+                padding: 30px;
+                border: 2px solid black;
+                border-radius: 0px;
+                margin-top:10% ;
+                margin-left:25% ;
+                width: 40%;
+            }
+
+            .main {
+                padding: 10px;
+                border: 2px solid black;
+                border-radius: 00px;
+                margin-left:25% ;
+                margin-top:10% ;
+                width: 40%;
+            }
+        </style>
+    </head>
+    <body>
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {% if msg %}
+            <script>
+                alert("Credential Wrong")
+            </script>
+            {% endif %}
+            <div class="main">
+            <h1 align='center'>Login</h1>
+            <br>
+            <input type="hidden" name="next" value="{{ request.GET.next }}"/>
+            <div class="row">
+                <div class="col-sm-12">
+                    <label>Username</label>
+                    <input type="text" class='form-control' name='username'>
+                </div>
+            </div>
+            
+            <br>
+            <div class="row">
+                <div class="col-sm-12">
+                    <label>Password</label>
+                    <input type="password"class='form-control' name='password'>
+                </div>
+            </div>
+            <br>
+            <div class="row">
+                <div class="col-sm-3"></div>
+                <div class="col-sm-3">
+                    <button class="btn btn-success" type="submit">Login</button>
+                </div>
+                <div class="col-sm-3">
+                    <button class="btn btn-danger" type="reset">Cancel</button>
+
+                </div>
+                <div class="col-sm-3">
+                </div>
+            </div>
+        </form>
+    </body>
+</html>

@@ -1,0 +1,99 @@
+
+        {% extends 'home.html' %}
+        {% block body %}
+        <style>
+            .container1 {
+                padding: 30px;
+                border: 1px solid black;
+                border-radius: 0px;
+                margin-top:0% ;
+                margin-left:25% ;
+                width: 50%;
+            }
+        </style>
+    <body id="as" >
+      <form enctype="multipart/form-data" id="id_form" method="POST">
+    {% csrf_token %}
+    <div class="container1">
+    <h1 align='center'>Product</h1>
+    <div class="col">
+<br>
+          <div  class="row">
+            <div class="col-sm-2">
+              <label>Name</label>
+            </div>
+            <div class="col-sm-8">
+             <input type="text"
+             class="form-control" id="product_name" required name="product_name">
+            </div>
+            
+          </div>
+          <div class="col-sm-2"></div>
+         </div>
+
+         <br>
+
+         <div class="row">
+          <div class="col-sm-2">
+            <label> Price</label>
+
+          </div>
+          <div class="col-sm-8">
+            <input type="number"
+            class="form-control" id='price' required name="price">
+          </div>
+          </div>
+<br>
+<div class="row">
+    <div class="col-sm-2">
+      <label> Image</label>
+
+    </div>
+    <div class="col-sm-8">
+      <input type="file"
+      class="form-control" id='img' required name="p_img">
+    </div>
+    </div>
+          
+
+        <br>
+        <input type="text" name="user" value="{{ request.user.id }}" hidden>
+          <div class="row">
+            <div class="col-sm-4"></div>
+            <div class="col-sm-2">
+               <button type="button" id="submit" onclick="data_submit()" class="btn btn-success">Submit</button>
+            </div>
+            <div class="col-sm-2">
+                <button class="btn btn-warning" type="reset">  Cancel </button>
+            </div>
+            <div class="col-sm-4"></div>
+          </div>
+</div>
+
+
+</form>
+<script>
+    function data_submit(){
+        var formData = new FormData(document.getElementById("id_form"))
+        $.ajax({
+            url : "{% url 'product_api-list' %}" ,
+            headers: { "X-CSRFToken": "{{ csrf_token }}" },
+            type:"POST",
+            data : formData,
+            processData: false,
+            contentType: false,
+            success:function(data){
+                alert('Product Add successfuly ')
+                location.reload()
+                console.log("success data",data)
+
+            },
+            error:function(data){
+                alert("Enter All Fields")
+                console.log('error',data)
+            }
+
+        });
+    }
+</script>
+    {% endblock %}

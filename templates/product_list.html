@@ -1,0 +1,71 @@
+{% extends 'home.html' %}
+{% block body %}
+<script src=
+"https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js">
+  </script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+  <!-- Latest compiled JavaScript -->
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<table class="table table-bordered" style="text-align:center">
+    <thead>
+      <tr>
+        <th align="center" scope="col">Sr No
+        </th>
+        <th>Name</th>
+        <th>Price</th>
+        <th>Edit</th>
+        <th>Delete</th>
+      </tr>
+    </thead>
+    <tfoot>
+      <tr>
+        <th align="center" scope="col">Sr No
+        </th>
+        <th>Name</th>
+        <th>Price</th>
+        <th>Edit</th>
+        <th>Delete</th>
+      </tr>
+    </tfoot>
+    <tbody >
+        {% for i in product %}
+        <tr>
+            <td align="center" scope="col">{{forloop.counter}}
+            </td>
+            <td align="center" scope="col"> {{ i.product_name }}
+            </td>
+            <td align="center" scope="col"> {{ i.price }}
+            </td>
+            
+            <td align="center"><button type='button' value='edit' align="center" id="edit-{{i.id}}" class='btn btn-info form-control'  onclick="location.href='update_product/{{ i.id }}'">Edit</button>
+            <td align="center"><button type='button' id="delete-{{i.id}}" value='delete'  class='btn btn-danger form-control' onClick='delete_rec({{i.id}})'>Delete</button>
+            </td>
+           
+        </tr>
+        {% endfor %}
+        </tbody>
+  </table>
+
+  <script>
+      function delete_rec(id){
+          $.ajax({
+              url : "/apiproduct_api/"+id+"/",
+              type : "DELETE",
+              data:{},
+              headers : {"X-CSRFToken" : "{{ csrf_token }}"},
+              success:function(data){
+                  console.log("record Delete successfuly")
+                  alert("Recorde Delete Successfuly")
+              },
+              error:function(data){
+                  console.log("something wents wrong",data)
+              },
+
+          })
+      }
+  </script>
+
+{% endblock %}

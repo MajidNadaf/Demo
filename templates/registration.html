@@ -1,0 +1,132 @@
+
+<html>
+    <body>
+      <head>
+        <script src="sweetalert2.min.js"></script>
+<link rel="stylesheet" href="sweetalert2.min.css">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <style type="text/css">
+        #as
+        { background-color:lightblue;
+          margin:10px 200px 100px 10px;
+    
+    
+          padding:50px 50px 50px 50px;
+    
+         }
+    
+         
+          .container {
+        padding: 30px;
+        border-radius: 30px;
+        background-color: white;
+              }
+                    
+                    
+     
+    
+        </style>
+    </head>
+    <body id="as" >
+      <form enctype="multipart/form-data" method="POST">
+    {% csrf_token %}
+    <div class="container">
+    <h1 align='center'>Registration</h1>
+    <div class="col">
+<br>
+          <div  class="row">
+            <div class="col-sm-2"></div>
+            <div class="col-sm-4">
+              <label>First Name</label>
+             <input type="text"
+             class="form-control" required name="fname">
+            </div>
+            
+            <div class="col-sm-4">
+              <label>Last Name</label>
+              <input type="text"
+              class="form-control" required name="lname">
+            </div>
+          </div>
+          <div class="col-sm-2"></div>
+         </div>
+
+         <br>
+
+         <div class="row">
+          <div class="col-sm-2"></div>
+          <div class="col-sm-4">
+            <label> E-mail</label>
+            <input type="email"
+            class="form-control" required name="email">
+          </div>
+
+            <div class="col-sm-4">
+              <label>Username</label>
+              <input type="text"
+              class="form-control" required name="username">
+            </div>
+
+          </div>
+<br>
+          <div class="row">
+            <div class="col-sm-2"></div>
+            <div class="col-sm-4">
+              <label>Password</label>
+              <input type="password"
+              class="form-control" id='password' required name="password">
+            </div>
+            <div class="col-sm-4">
+              <label>Conform Password</label>
+              <input type="password"
+              class="form-control" id="conf_password" onfocusout='password_check()' required name="conf_password">
+            </div>
+            <div class="col-sm-2"></div>
+          </div>
+
+        <br>
+          <div class="row">
+            <div class="col-sm-4"></div>
+            <div class="col-sm-2">
+               <button class="btn btn-success">Save</button>
+            </div>
+            <div class="col-sm-2">
+                <button class="btn btn-warning"> <a href="address2.html"> Next </a></button>
+            </div>
+            <div class="col-sm-4"></div>
+          </div>
+</div>
+
+
+</form>
+<!--view record-->
+
+
+
+
+  <!-- Optional JavaScript -->
+  <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+  <!-- <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script> -->
+</body>
+</html>
+    
+    </div>
+    </div>
+    </div>
+    </div>
+    </body>
+    <script>
+      function password_check(){
+        password=$('#password').val()
+        conf_password=$('#conf_password').val()
+        if( password != conf_password){
+          alert('Password Not Same')
+          $('#password').val('')
+          $('#conf_password').val('')
+        }
+      }
+    </script>
+    </html>
