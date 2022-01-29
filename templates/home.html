@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+  {% block head %}
 <head>
   <title>Home</title>
   <meta charset="utf-8">
@@ -8,24 +9,31 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 </head>
+
+{% endblock %}
 <body>
 
-<nav class="navbar navbar-inverse">
+<nav class="navbar navbar-dark bg-success ">
   <div class="container-fluid">
     <div class="navbar-header">
       <a class="navbar-brand" href="#"></a>
     </div>
     <ul class="nav navbar-nav">
-      <li class="active"><a href="{% url 'home' %}">Home</a></li>
+      <li class=""><a href="{% url 'home' %}">Home</a></li>
       <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Product <span class="caret"></span></a>
         <ul class="dropdown-menu">
           <li><a href="{% url 'product' %}"> Add Product</a></li>
           <li><a href="{% url 'product_list' %}">Product List</a></li>
         </ul>
       </li>
+      <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Sale <span class="caret"></span></a>
+        <ul class="dropdown-menu">
+          <li><a href="{% url 'sale' %}"> Sale </a></li>
+          <li><a href="{% url 'product_list' %}">Product List</a></li>
+        </ul>
+      </li>
       <li><a href="{% url 'payment' %}">Payment</a></li>
-      <li><a href="#">Page 3</a></li>
-    <li class="active"><a href="{% url 'logout' %}" class="fa fa-sign-out">Logout</a></li>
+      <li class=" navcolor" ><a href="{% url 'logout' %}" class="fa fa-sign-out">Logout</a></li>
 
     </ul>
   </div>

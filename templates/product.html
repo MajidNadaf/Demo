@@ -3,12 +3,12 @@
         {% block body %}
         <style>
             .container1 {
-                padding: 30px;
-                border: 1px solid black;
-                border-radius: 0px;
+                padding-left: 90px;
+                border: 1px solid blue;
+                border-radius: 20px;
                 margin-top:0% ;
-                margin-left:25% ;
-                width: 50%;
+                margin-left:12% ;
+                width: 80%;
             }
         </style>
     <body id="as" >
@@ -20,7 +20,7 @@
 <br>
           <div  class="row">
             <div class="col-sm-2">
-              <label>Name</label>
+              <label>Product Name</label>
             </div>
             <div class="col-sm-8">
              <input type="text"
@@ -45,6 +45,17 @@
           </div>
 <br>
 <div class="row">
+  <div class="col-sm-2">
+    <label> Quantity</label>
+
+  </div>
+  <div class="col-sm-8">
+    <input type="number"
+    class="form-control" id='qty' required name="qty">
+  </div>
+  </div>
+  <br>
+<div class="row">
     <div class="col-sm-2">
       <label> Image</label>
 
@@ -68,6 +79,7 @@
             </div>
             <div class="col-sm-4"></div>
           </div>
+          <br>
 </div>
 
 

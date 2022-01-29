@@ -1,0 +1,314 @@
+
+        {% extends 'home.html' %}
+        {% block body %}
+        <style>
+            .container1 {
+                padding-left: 90px;
+                border: 1px solid blue;
+                border-radius: 20px;
+                margin-top:0% ;
+                margin-left:12% ;
+                width: 80%;
+            }
+        </style>
+    <body id="as" >
+      <form enctype="multipart/form-data" id="id_form" method="POST">
+    {% csrf_token %}
+    <div class="container1">
+    <h1 align='center'>Sale</h1>
+    <div class="col">
+<br>
+          <div  class="row">
+            <div class="col-sm-3">
+              <label>Customer Name</label>
+            </div>
+            <div class="col-sm-8">
+             <input type="text"
+             class="form-control" id="cust_name" required name="cust_name">
+            </div>
+            
+          </div>
+          <div class="col-sm-2"></div>
+         </div>
+
+
+         <br>
+         <div  class="row">
+            <div class="col-sm-3">
+              <label>Product Name</label>
+            </div>
+            <div class="col-sm-8">
+             <select class="form-control" onchange="price_qty()"  id="product_name" required name="product_name">
+                 <option id="" value="" hidden>Select Product </option>
+                 {% for i in product %}
+                
+                    <option  id="prod_id-{{ i.id }}" class="{{ i.product_name }}" value="{{ i.id }}">{{ i.product_name }}</option>
+                 {% endfor %}
+             </select>
+             
+            </div>
+            
+          </div>
+          <div class="col-sm-2"></div>
+         <br>
+         <div class="row">
+          <div class="col-sm-3">
+            <label> Price</label>
+
+          </div>
+          <div class="col-sm-8">
+            <input type="number"
+            class="form-control" id='price' required name="price">
+          </div>
+          </div>
+<br>
+<div class="row">
+  <div class="col-sm-3">
+    <label>Available Quantity</label>
+
+  </div>
+  <div class="col-sm-8">
+    <input type="number"
+    class="form-control" id='avl_qty' required name="avl_qty">
+  </div>
+  </div>
+  <br>
+  <div class="row">
+    <div class="col-sm-3">
+      <label> Quantity</label>
+  
+    </div>
+    <div class="col-sm-8">
+      <input type="number"
+      class="form-control" id='qty' onkeyup="total_cal()" required name="qty">
+    </div>
+    </div>
+    <br>
+<div class="row">
+    <div class="col-sm-3">
+      <label> Total</label>
+
+    </div>
+    <div class="col-sm-8">
+      <input type="text" readonly
+      class="form-control" id='total' required name="total">
+    </div>
+    </div>
+    <br>
+    <div align="center">
+        <button type="button" onclick="add() " class="btn btn-info">Add</button>
+    </div>
+    <br>
+
+    <div class="row">
+        <div class="col-sm-11">
+            <table class="table table-bordered">
+                <thead >
+                    <th>Product Name</th>
+                    <th>Price</th>
+                    <th>Qty</th>
+                    <th>Total</th>
+                </thead>
+                <tbody id="table_data">
+                </tbody>
+    
+            </table>
+        </div>
+        
+    </div>
+          
+
+        <br>
+        <div class="row">
+            <div class="col-sm-6"></div>
+            <div class="col-sm-2">
+                <label>Grand Total</label>
+            </div>
+            <div class="col-sm-3">
+            <input type='text' id='grand_total' class="form-control" readonly>
+
+            </div>
+
+        </div>
+        <br>
+        <input type="text" name="user" value="{{ request.user.id }}" hidden>
+          <div class="row">
+            <div class="col-sm-4"></div>
+            <div class="col-sm-2">
+               <button type="button" id="submit" onclick="OrderDataSubmit()" class="btn btn-success">Submit</button>
+            </div>
+            <div class="col-sm-2">
+                <button class="btn btn-warning" type="reset">  Cancel </button>
+            </div>
+            <div class="col-sm-4"></div>
+          </div>
+          <br>
+</div>
+
+
+</form>
+
+<script>
+    function price_qty(){
+        var product_id=$("#product_name").val()
+       console.log($("#product_name").find(':selected').attr('class'));
+
+        $.ajax({
+            url : "{% url 'product_data' %}",
+            data : {
+                product_id :product_id,
+            },
+            type:"GET",
+            success:function(data){
+                console.log("success",data)
+                $("#price").val(data.price)
+                $("#avl_qty").val(data.qty)
+            },
+            error:function(data){
+                console.log("error",data)
+            },
+        });
+    }
+</script>
+<script>
+    function total_cal(){
+        var qty=parseInt($("#qty").val())
+        var avl_qty=parseInt($("#avl_qty").val())
+        var price=parseInt($("#price").val())
+            if(  qty && qty < avl_qty ){
+                $("#total").val(price * qty  )
+            }else{
+                $("#total").val(  )
+                alert("Enter Valid Quantity")
+            }
+    }
+</script>
+<script>
+    var myCartData = [];
+    localStorage.setItem("myCartData", JSON.stringify(myCartData));
+    function add(){
+       var  product_id=$("#product_name").val()
+       var  product_name=$("#product_name").children(":selected").attr("class");
+        console.log(product_name)
+       var  price=$("#price").val()
+       var  qty=$("#qty").val()
+       var  total=$("#total").val()
+        var myCartData = JSON.parse(localStorage.getItem("myCartData"));
+        if(validte()){
+            myCartData.push({
+                "product_id":product_id,
+                "product_name":product_name,
+                "price":price,
+                "qty":qty,
+                "total":total,
+            })
+            localStorage.setItem("myCartData", JSON.stringify(myCartData));
+            alert("product add in list")
+            product_list()
+        }
+
+    }
+</script>
+<script>
+    function validte(){
+        console.log("validate",$("#product_name").val())
+        if($("#product_name").val() == "" ){
+            alert("Select Product ")
+            return false
+        }else if($("#price").val() == ""){
+            alert("Enter Price ")
+            return false
+        }else if($("#qty").val() == ""){
+            alert("Enter Valid Qty ")
+            return false
+        }else{
+            return true
+        }
+        
+    }
+</script>
+<script>
+    function product_list(){
+       var  myCartData=JSON.parse(localStorage.getItem("myCartData"))
+       var table_data=""
+       var id=0
+       var grand_total=0
+       for(var i=0 ; i < myCartData.length ; i++ ){
+           id=id+1
+           if(myCartData[i]){
+              table_data +=`<tr>
+                <td id=p_name-` + id + `>`+myCartData[i].product_name+`</td>
+                <td id=price-` + id + `>`+myCartData[i].price+`</td>
+                <td id=qty-` + id + `>`+myCartData[i].qty+`</td>
+                <td id=total-` + id + `>`+myCartData[i].total+`</td>
+              </tr>
+              `
+              grand_total = grand_total + parseInt(myCartData[i].total)
+           }
+       }
+       $("#grand_total").val(grand_total)
+       $("#table_data").html(table_data)
+
+    }
+</script>
+<script>
+    function OrderDataSubmit(){
+        var cust_name=$("#cust_name").val()
+        var grand_total=$("#grand_total").val()
+        $.ajax({
+            url : "{% url 'customer_order-list' %}",
+            data : {
+                cust_name :cust_name,
+                grand_total :grand_total,
+                user:"{{ request.user.id }}",
+            },
+            type:"POST",
+            headers : {"X-CSRFToken":"{{ csrf_token }}"},
+            success:function(data){
+                orderLIstdata(data.id)
+               
+            },
+            error:function(data){
+                console.log("error",data)
+            },
+        });
+    }
+
+</script>
+
+<script>
+    function orderLIstdata(id){
+        var myCartData=JSON.parse(localStorage.getItem("myCartData"))
+        var d= 0
+        for(var i=0 ; i < myCartData.length ; i++ ){
+//        for(var i=0 ; i < myCartData.length ; i++ ){
+            d=d+1
+            if (myCartData[i]){
+                $.ajax({
+                    url : "{% url 'product_order_list' %}",
+                    data : {
+                        product_id :myCartData[i].product_id,
+                        order_id :id,
+                        qty:myCartData[i].qty,
+                        price:myCartData[i].price,
+                        total:myCartData[i].total,
+                    },
+                    type:"POST",
+                    headers : {"X-CSRFToken" : "{{ csrf_token }}"},
+                    success:function(data){
+                       console.log("success in order list")
+                       if(d == myCartData.length){
+                            location.reload()
+                        }
+                    },
+                    error:function(data){
+                        console.log("error",data)
+                    },
+                });
+            }
+        }
+        
+    }
+
+</script>
+    {% endblock %}

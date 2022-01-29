@@ -2,20 +2,20 @@
         {% extends 'home.html' %}
         {% block body %}
         <style>
-            .container1 {
-                padding: 30px;
-                border: 1px solid black;
-                border-radius: 0px;
-                margin-top:0% ;
-                margin-left:25% ;
-                width: 50%;
-            }
+          .container1 {
+            padding-left: 90px;
+            border: 1px solid blue;
+            border-radius: 20px;
+            margin-top:0% ;
+            margin-left:12% ;
+            width: 80%;
+        }
         </style>
     <body id="as" >
       <form enctype="multipart/form-data" id="id_form" method="POST">
     {% csrf_token %}
     <div class="container1">
-    <h1 align='center'>update Product</h1>
+    <h1 align='center'> Product Update</h1>
     <div class="col">
 <br>
           <div  class="row">
@@ -45,6 +45,18 @@
           </div>
 <br>
 <div class="row">
+  <div class="col-sm-2">
+    <label> Quantity</label>
+
+  </div>
+  <div class="col-sm-8">
+    <input type="number"
+    class="form-control" id='qty' value="{{ product.qty }}" required name="qty">
+  </div>
+  </div>
+<br>
+
+<div class="row">
     <div class="col-sm-2">
       <label> Image</label>
 
@@ -54,8 +66,8 @@
       class="form-control" id='img'  required name="p_img">
     </div>
     <div class="row">
-        <div class="col-sm-6"></div>
-        <div class="col-sm-6" align="left">
+        <div class="col-sm-4"></div>
+        <div class="col-sm-3" align="left">
             <img id="img-upload" src="{{product.p_img.url}}" style="width:150px;height:150px;">
         </div>
     </div>
@@ -67,13 +79,15 @@
           <div class="row">
             <div class="col-sm-4"></div>
             <div class="col-sm-2">
-               <button type="button" id="submit" onclick="data_submit()" class="btn btn-success">Submit</button>
+               <button type="button" id="submit" onclick="data_submit()" class="btn btn-success">Update</button>
             </div>
             <div class="col-sm-2">
                 <button class="btn btn-warning" type="reset">  Cancel </button>
             </div>
             <div class="col-sm-4"></div>
           </div>
+<br>
+
 </div>
 
 

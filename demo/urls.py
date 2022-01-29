@@ -35,6 +35,10 @@ urlpatterns = [
     path('product_list',ProductListView,name='product_list'),
     path('update_product/<int:id>',ProductUpdateView,name='update_product'),
 
+    path('sale',SaleView,name='sale'),
+    path("product_data",product_data,name="product_data"),
+    path("product_order_list",Product_list_Post,name="product_order_list"),
+
 
     path('payment',payment_home_page,name='payment')
 ]
